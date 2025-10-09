@@ -1,0 +1,22 @@
+# diretorios auxiliares
+.pdf/
+.aux/
+
+# latex
+*.aux
+*.bcf*
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.toc
+*.idx
+*.ilg
+*.ind
+
+# arquivos binarios
+*.pdf
+
+# arquivos comprimidos
+*.zip
