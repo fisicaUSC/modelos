@@ -15,8 +15,5 @@
 *.ilg
 *.ind
 
-# arquivos binarios
-*.pdf
-
 # arquivos comprimidos
 *.zip
