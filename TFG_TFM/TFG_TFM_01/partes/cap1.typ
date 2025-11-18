@@ -21,8 +21,7 @@ interna, as declaracións de orixinalidade e autorización de difusión asinadas
 nin os resúmenes, nin as contraportadas internas e/ou externas meramente
 protectoras ou con información de peche.
 
-== Bla Bla Bla O RESTO É PUTA MERDA RELACIONADA CON QUE PENSAN QUE NON SABEMOS
-LATEX (como introducir ecuacións, figuras, etc)
+== Pequeno tutorial de Typst (pendente)
 
 #text(red)[
     Pódese escribir un minitutorial de typst; cómo poñer figuras e labels, como
