@@ -54,7 +54,7 @@
         set align(center)
         line(length: 65mm, stroke: 0.2mm)
         v(10mm)
-        text(size: 20pt)[#titulo]
+        smallcaps(text(size: 20pt)[#titulo])
         v(10mm)
         line(length: 65mm, stroke: 0.2mm)
         v(20mm)
@@ -66,22 +66,6 @@
         columns: 1fr,
         align: left,
         stroke: none,
-        /*
-        if autoria.len() == 1 {
-            [
-            #text(size: 14pt, style: "italic")[Autores:] \
-            #text(size: 16pt, weight: "bold")[#autoria.first(default: "")]
-            ]
-        }
-        else {
-            [
-            #text(size: 14pt, style: "italic")[Autores:] \
-            #text(size: 16pt, weight: "bold")[
-            #for autor in autoria [#autor, ]
-                ] 
-            ]
-        },
-        */
         [
         #set text(14pt, style: "italic")
         #{

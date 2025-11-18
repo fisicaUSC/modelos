@@ -14,7 +14,7 @@ Se queres que se xere un salto de liña ao escribir o seguinte autor podes:
 */
 
 #show: estilo_tfg.with(
-    titulo             : smallcaps[Titulo do traballo],
+    titulo             : "Titulo do traballo",
     autoria            : ("Autor1", "Autor2", "Autor3", ),
     titor              : "Titor",
     /*
