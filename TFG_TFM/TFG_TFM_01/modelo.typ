@@ -1,26 +1,22 @@
-/*
-    MIRAR COMO SE PODE FACER PARA POÑER O TÍTULO DA SECCIÓN ACTUAL DA PÁXINA NO
-    HEADER.
-*/
+#import "@preview/hydra:0.6.2": hydra
 
+// Definimos as cores
 #let azul_usc = color.rgb( 15, 41, 118)
 #let gris = color.rgb( 234, 236, 240)
 #let seccion = state("seccion", ([],))
 
-#let crear_encabezado() = [
+// Cabeceira
+#let crear_cabeceira() = [
     #grid(
-        columns: (1fr, 1fr, 1fr),
+        columns: (1fr),
         rows: (1fr, 1mm),
         stroke: none,
-        context {seccion.get().last()},
-        [~],
-        [~],
-        line(length: 100%, stroke: 0.5pt),
-        line(length: 100%, stroke: 0.5pt),
-        line(length: 100%, stroke: 0.5pt),
+        [#smallcaps(context hydra(1, skip-starting: false))], 
+        grid.hline(stroke: 0.5pt + black, position: bottom),
     )
 ]
 
+// Portada
 #let crear_portada(
     titulo             : none,
     autoria            : none,
@@ -65,26 +61,52 @@
     }
 
     //Autor, titor e cotitor
-    // non fai falta a táboa pero dame pereza quitala
     table(
         rows: (5em, 6em, 5em),
         columns: 1fr,
         align: left,
         stroke: none,
+        /*
+        if autoria.len() == 1 {
+            [
+            #text(size: 14pt, style: "italic")[Autores:] \
+            #text(size: 16pt, weight: "bold")[#autoria.first(default: "")]
+            ]
+        }
+        else {
+            [
+            #text(size: 14pt, style: "italic")[Autores:] \
+            #text(size: 16pt, weight: "bold")[
+            #for autor in autoria [#autor, ]
+                ] 
+            ]
+        },
+        */
         [
-            #text(size: 14pt, style: "italic")[Autor:] \
-            #text(size: 16pt, weight: "bold")[#autoria.first()] // :FACER: array
+        #set text(14pt, style: "italic")
+        #{
+            if autoria.len() == 1 or autoria.len() == 0 {[Autor:]}
+            else {[Autores:]} 
+        }\
+        #set text(16pt, style: "normal", weight: "bold")
+        #for autor in autoria {
+            if autor == autoria.last() {[#autor]}
+            else {[#autor, ]}
+            }
         ],
         [
             #text(size: 14pt, style: "oblique")[Titor:]\
             #text(size: 14pt, weight: "bold")[#titor]\
             #text( size: 14pt, style: "oblique",)[#area_titor, #departamento_titor]\
         ],
+        if cotitor == none or cotitor == "" {[]}
+        else {
         [
-            #text(size: 14pt, style: "oblique")[Cotitor: (opcional)]\
+            #text(size: 14pt, style: "oblique")[Cotitor: ]\
             #text(size: 14pt, weight: "bold")[#cotitor]\
             #text(size: 14pt, style: "oblique")[Affiliation do cotitor]
         ]
+        }
     )
 
     align(right)[#data_defensa.display("[day]-[month repr:numerical]-[year]")]
@@ -131,7 +153,13 @@
 
     _Titor_: *#titor* #text(style: "oblique")[#area_titor, #departamento_titor]
 
-    _Cotitor (opcional)_: *#cotitor*, #text(style: "oblique")[#afiliacion_cotitor]
+    #{ 
+    if cotitor == none or cotitor == "" {[]}
+    else {
+    [_Cotitor_ : *#cotitor*, #text(style: "oblique")[#afiliacion_cotitor]]
+        }
+  
+    }
 
     #v(10mm)
 
@@ -204,7 +232,7 @@
     set page(
         paper: "a4",
         margin: (x: 20mm, y: 30mm),
-        header: crear_encabezado()
+        header: none,
     )
     set text(
         size: 12pt,
@@ -252,18 +280,15 @@
 
     resumos
 
-    context[#seccion.final()]
     pagebreak()
+
+    set page(header: crear_cabeceira())
+    set page(numbering: "1")
+    counter(page).update(1)
 
     crear_indice()
 
-    show heading.where(level: 1): eso => {
-        let corpo = eso.body
-        seccion.update(eso => eso + (corpo,))
-        [#context { counter(heading.where(level:1)).get().first() }.#corpo]
-    }
-    set page(numbering: "1")
-    counter(page).update(1)
+    pagebreak()
 
     documento
 
