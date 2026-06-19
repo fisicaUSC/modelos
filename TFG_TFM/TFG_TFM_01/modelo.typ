@@ -88,7 +88,7 @@
         [
             #text(size: 14pt, style: "oblique")[Cotitor: ]\
             #text(size: 14pt, weight: "bold")[#cotitor]\
-            #text(size: 14pt, style: "oblique")[Affiliation do cotitor]
+            #text(size: 14pt, style: "oblique")[#afiliacion_cotitor]
         ]
         }
     )
