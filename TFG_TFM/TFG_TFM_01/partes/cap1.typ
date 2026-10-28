@@ -1,10 +1,3 @@
-#set par(
-    spacing: 5mm,
-    first-line-indent: (amount: 10mm, all: true),
-    hanging-indent: 5mm,
-    justify: true,
-)
-
 = Algunhas preguntas frecuentes
 
 Neste capítulo incluímos algunha subsección, ecuación, figura e táboa, e de

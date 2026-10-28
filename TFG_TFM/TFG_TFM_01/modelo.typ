@@ -6,15 +6,13 @@
 #let seccion = state("seccion", ([],))
 
 // Cabeceira
-#let crear_cabeceira() = [
-    #grid(
-        columns: (1fr),
-        rows: (1fr, 1mm),
-        stroke: none,
-        [#smallcaps(context hydra(1, skip-starting: false))], 
-        grid.hline(stroke: 0.5pt + black, position: bottom),
-    )
-]
+#let crear_cabeceira() = grid(
+    columns: 1fr,
+    rows: (1fr, 1mm),
+    stroke: none,
+    smallcaps(context hydra(1, skip-starting: false)),
+    grid.hline(stroke: 0.5pt + black, position: bottom),
+)
 
 // Portada
 #let crear_portada(
@@ -66,30 +64,40 @@
         columns: 1fr,
         align: left,
         stroke: none,
-        [
-        #set text(14pt, style: "italic")
-        #{
-            if autoria.len() == 1 or autoria.len() == 0 {[Autor:]}
-            else {[Autores:]} 
-        }\
-        #set text(16pt, style: "normal", weight: "bold")
-        #for autor in autoria {
-            if autor == autoria.last() {[#autor]}
-            else {[#autor, ]}
+        {
+            set text(14pt, style: "italic")
+            if autoria.len() == 1 or autoria.len() == 0 {
+                [Autor:]
+            } else {
+                [Autores:]
             }
-        ],
-        [
-            #text(size: 14pt, style: "oblique")[Titor:]\
-            #text(size: 14pt, weight: "bold")[#titor]\
-            #text( size: 14pt, style: "oblique",)[#area_titor, #departamento_titor]\
-        ],
-        if cotitor == none or cotitor == "" {[]}
-        else {
-        [
-            #text(size: 14pt, style: "oblique")[Cotitor: ]\
-            #text(size: 14pt, weight: "bold")[#cotitor]\
-            #text(size: 14pt, style: "oblique")[#afiliacion_cotitor]
-        ]
+            linebreak()
+
+            set text(16pt, style: "normal", weight: "bold")
+            for autor in autoria {
+                if autor == autoria.last() {
+                    [#autor]
+                } else {
+                    [#autor, ]
+                }
+            }
+            linebreak()
+        },
+        {
+            text(size: 14pt, style: "oblique")[Titor:]
+            linebreak()
+            text(size: 14pt, weight: "bold")[#titor]
+            linebreak()
+            text( size: 14pt, style: "oblique",)[#area_titor, #departamento_titor]
+        },
+        if cotitor == none or cotitor == "" {
+            none
+        } else {
+            text(size: 14pt, style: "oblique")[Cotitor: ]
+            linebreak()
+            text(size: 14pt, weight: "bold")[#cotitor]
+            linebreak()
+            text(size: 14pt, style: "oblique")[#afiliacion_cotitor]
         }
     )
 
@@ -137,20 +145,20 @@
 
     _Titor_: *#titor* #text(style: "oblique")[#area_titor, #departamento_titor]
 
-    #{ 
-    if cotitor == none or cotitor == "" {[]}
-    else {
-    [_Cotitor_ : *#cotitor*, #text(style: "oblique")[#afiliacion_cotitor]]
-        }
-  
+    #if cotitor == none or cotitor == "" {
+        []
+    } else {
+        [_Cotitor_ : *#cotitor*, #text(style: "oblique")[#afiliacion_cotitor]]
     }
 
     #v(10mm)
 
+    // :FACER: este texto debe ser unha variable modificable externamente
     Opcionalmente, incluír aquí liñas de agradecementos a outras persoas que
     colaborasen, referencias a financiación económica, notas sobre patentes ou
-    publicacións de traballos derivados do traballo, ou calqueira outra información
-    complementaria de contextualización xeral do traballo que considere convinte.
+    publicacións de traballos derivados do traballo, ou calqueira outra
+    información complementaria de contextualización xeral do traballo que
+    considere convinte.
 
     #v(2em)
 
@@ -176,15 +184,16 @@
         Autorización do autor á difusión do traballo (opcional)
     ]
 
-    O  autor autoriza á difusión do traballo aos efectos considerados nos vixentes
-    regulamentos de TFG e TFM da Universidade de Santiago de Compostela (Artigo
-    11.3) e de TFM do Máster en Física (Artigo 33), entendendo que esta
-    autorización non inflúe na propiedade intelectual do traballo nen á
-    posibilidade de publicar o mesmo total ou parcialmente por outros medios.
+    O autor autoriza á difusión do traballo aos efectos considerados nos
+    vixentes regulamentos de TFG e TFM da Universidade de Santiago de
+    Compostela (Artigo 11.3) e de TFM do Máster en Física (Artigo 33), entendendo
+    que esta autorización non inflúe na propiedade intelectual do traballo nen
+    á posibilidade de publicar o mesmo total ou parcialmente por outros medios.
     Autoriza asemade a que a Facultade de Física desa Universidade dispoña de
     copia electrónica do traballo para o seu arquivo, consulta e emprego para
     usos académicos e de investigación coa mención específica ao autor.
 
+    // :FACER: este texto debe ser unha variable modificable externamente
     En Santiago de Compostela, a X de Febreiro de 2020. Asinado,
 ]
 
@@ -213,6 +222,12 @@
     resumos            : none,
     documento,
 ) = {
+    set document(
+        title : "Traballo de Fin de Grao",
+        author: autoria.flatten(),
+        keywords: ("TFG","Física"),
+        date: data_defensa
+    )
     set page(
         paper: "a4",
         margin: (x: 20mm, y: 30mm),
@@ -243,7 +258,7 @@
         data_defensa       : data_defensa ,
     )
 
-    pagebreak(to: "odd") // páxina en blanco detrás da portada
+    pagebreak(to: "odd") // páxina en branco detrás da portada
 
     crear_presentacion(
         titulo             : titulo ,
@@ -285,6 +300,3 @@
     )
 
 }
-
-
-// Resto dos capítulos
